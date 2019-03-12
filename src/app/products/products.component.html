@@ -1,0 +1,56 @@
+<div class="loading" [style.display]="loading ? 'flex' : 'none'">
+  <div class="spinner"></div>
+</div>
+<div class="products" [style.display]="loading ? 'none' : 'flex'">
+
+  <div class="tabs">
+    <div class="base active">
+      <img src="assets/icons/list.svg" alt="Producto">
+      <span class="name">Productos</span>
+      <span class="badge">{{ total }}</span>
+    </div>
+  </div>
+
+
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="photo">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <img [src]="row.photo ? row.photo : 'assets/icons/picture.svg'" alt="">
+      </td>
+    </ng-container>
+
+    <!-- Progress Column -->
+    <ng-container matColumnDef="sku">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> SKU </th>
+      <td mat-cell *matCellDef="let row"> {{row.sku}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+      <td mat-cell *matCellDef="let row"
+      matTooltip="{{row.name}}"
+      matTooltipClass="tooltip"
+      [matTooltipPosition]="'above'">
+        {{row.name.substring(0,50)}}
+        {{ row.name.length > 50 ? '...' : '' }}
+      </td>
+    </ng-container>
+
+    <!-- Color Column -->
+    <ng-container matColumnDef="brand">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Brand </th>
+      <td mat-cell *matCellDef="let row"> {{row.brand}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns;">
+    </tr>
+  </table>
+
+  <mat-paginator [length]="total" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+</div>

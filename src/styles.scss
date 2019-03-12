@@ -1,15 +1,49 @@
+@import '~@angular/material/theming';
+@include mat-core();
+$madkting-primary: mat-palette($mat-indigo);
+$madkting-accent: mat-palette($mat-pink, A200, A100, A400);
+$madkting-warn: mat-palette($mat-red);
+$madkting-theme: mat-light-theme($madkting-primary, $madkting-accent, $madkting-warn);
+@include angular-material-theme($madkting-theme);
+
+// Madkting colors
+$blue: #2B9FC3;
+$red: #9C1821;
+
+html, body { height: 100%; }
 body {
   margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #efefef;
+  .main {
+    padding: 5px;
+  }
 }
 
-#spinner {
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  border: 3px solid #2B9FC3;
-  border-radius: 50%;
-  border-top-color: #fff;
-  animation: spin 1s ease-in-out infinite;
+.tooltip {
+  background-color: #2b2b2bbf;
+  font-size: 0.5em;
+  margin-bottom: 0 !important;
+}
+
+.loading {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  background-color: #2b2b2bbf;
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid $blue;
+    border-radius: 50%;
+    border-top-color: $red;
+    animation: spin 1s ease infinite;
+  }
 }
 
 @keyframes spin {

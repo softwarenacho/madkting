@@ -2,7 +2,7 @@
   "name": "Madkting Products",
   "short_name": "Madkting",
   "theme_color": "#2b9fc3",
-  "background_color": "#2b9fc3",
+  "background_color": "white",
   "display": "standalone",
   "orientation": "portrait",
   "Scope": "/",
