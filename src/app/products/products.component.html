@@ -9,7 +9,7 @@
       <span class="name">Productos</span>
       <span class="badge">{{ total }}</span>
     </div>
-    <div id="tab-{{item['pk']}}" class="tab" *ngFor="let item of tabs" [ngClass]="product['sku'] == item['sku'] ? 'active' : ''" (click)="openTab(item)">
+    <div id="tab-{{item['pk']}}" class="tab" *ngFor="let item of tabs" [ngClass]="product['sku'] == item['sku'] ? 'active' : ''" (click)="selectTab(item)">
       <span class="name">{{ item['sku'] }}</span>
       <i class="fa fa-close" (click)="closeTab(item)"></i>
     </div>
@@ -203,6 +203,6 @@
     <tr mat-row *matRowDef="let row; columns: columns;">
     </tr>
   </table>
-  <mat-paginator  *ngIf="!product" [length]="total" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+  <!-- <mat-paginator [length]="total" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" (page)="paginate($event)" showFirstLastButtons></mat-paginator> -->
 
 </div>
