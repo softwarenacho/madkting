@@ -75,10 +75,12 @@ $break: 768px;
       padding: 10px;
       font-size: 0.65em;
       text-align: center;
+      user-select: none;
     }
     .mat-header-cell {
       color: $grey;
       text-align: center;
+      user-select: none;
     }
     .mat-column-photo {
       padding: 5px;
