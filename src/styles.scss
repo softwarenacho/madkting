@@ -49,3 +49,11 @@ body {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+.mat-sidenav-container, .mat-sidenav-content, .mat-tab-body-content {
+    transform: none !important;
+}
+
+.fa-arrow-circle-left, .fa-arrow-circle-right {
+  color: #2b2b2b80;
+}

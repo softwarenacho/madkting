@@ -8,6 +8,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatPaginatorModule, MatSortModule } from '@angular/material';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
+import { NgxGalleryModule } from 'ngx-gallery';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { ProductsComponent } from './products/products.component';
@@ -25,6 +26,7 @@ import { api } from './api.service';
     MatSortModule,
     MatTableModule,
     MatCardModule,
+    NgxGalleryModule,
     BrowserAnimationsModule,
     MatTooltipModule,
     environment.production ? ServiceWorkerModule.register('ngsw-worker.js') : []

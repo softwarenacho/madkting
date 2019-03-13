@@ -14,4 +14,9 @@ export class api {
     return this.http.get(url, { 'observe': 'response' });
   }
 
+  get_config() {
+    let url = base + '/config';
+    return this.http.get(url, { 'observe': 'response' });
+  }
+
 }

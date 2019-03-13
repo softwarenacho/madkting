@@ -4,10 +4,14 @@
 <div class="products" [style.display]="loading ? 'none' : 'flex'">
 
   <div class="tabs">
-    <div class="base active">
+    <div class="tab" [ngClass]="!product ? 'active' : ''" (click)="backToList()">
       <img src="assets/icons/list.svg" alt="Producto">
       <span class="name">Productos</span>
       <span class="badge">{{ total }}</span>
+    </div>
+    <div class="tab" *ngFor="let item of tabs" [ngClass]="product['sku'] == item['sku'] ? 'active' : ''" (click)="openTab(item)">
+      <span class="name">{{ item['sku'] }}</span>
+      <i class="fa fa-close" (click)="closeTab(item)"></i>
     </div>
   </div>
 
@@ -26,6 +30,10 @@
       <mat-card-content>
         <p>
           <span class="container">
+            Nombre:
+            <span class="data">{{ product['name'] }}</span>
+          </span>
+          <span class="container">
             ID:
             <span class="data">{{ product['pk'] }}</span>
           </span>
@@ -34,22 +42,18 @@
             <span class="data">{{ product['sku'] }}</span>
           </span>
           <span class="container">
-            Nombre:
-            <span class="data">{{ product['name'] }}</span>
-          </span>
-          <span class="container">
             Marca:
             <span class="data">{{ product['brand'] }}</span>
           </span>
-          <span class="container">
+          <span class="container" *ngIf="product['category_pk']">
             Categoría:
-            <span class="data">{{ product['category_pk'] }}</span>
+            <span class="data">{{ getCategory(product['category_pk']) }}</span>
           </span>
           <span class="container">
             Condición:
             <span class="data">{{ product['condition'] }}</span>
           </span>
-          <span class="container">
+          <span class="container" *ngIf="product['local_pickup']">
             Recolección:
             <span class="data">{{ product['local_pickup'] }}</span>
           </span>
@@ -101,23 +105,24 @@
     <mat-card class="card">
       <mat-card-header>
         <div mat-card-avatar class="header-image">
-          <img src="assets/icons/open.svg" alt="Galería de imágenes">
+          <img src="assets/icons/picture.svg" alt="Galería de imágenes">
         </div>
-        <mat-card-title>Imágenes</mat-card-title>
+        <mat-card-title>Imágenes <span>{{ galleryImages.length }}</span></mat-card-title>
       </mat-card-header>
       <mat-card-content>
+        <ngx-gallery *ngIf="galleryImages.length" [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
       </mat-card-content>
     </mat-card>
 
-    <!-- Market Places -->
+    <!-- Descripción -->
     <mat-card class="card">
       <mat-card-header>
         <div mat-card-avatar class="header-image">
-          <img src="assets/icons/shop.svg" alt="Galería de imágenes">
+          <img src="assets/icons/document.svg" alt="Descripción">
         </div>
-        <mat-card-title>Tiendas</mat-card-title>
+        <mat-card-title>Descripción</mat-card-title>
       </mat-card-header>
-      <mat-card-content>
+      <mat-card-content [innerHTML]="product['description_html']">
       </mat-card-content>
     </mat-card>
 
