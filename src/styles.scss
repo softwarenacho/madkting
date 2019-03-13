@@ -53,6 +53,7 @@ body {
 .ngx-gallery-image {
   transition: 1s ease-in-out;
   max-width: calc(100% - 20px);
+  background-size: contain;
 }
 
 .mat-sidenav-container, .mat-sidenav-content, .mat-tab-body-content {
