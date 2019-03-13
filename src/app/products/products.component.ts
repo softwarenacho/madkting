@@ -124,6 +124,7 @@ export class ProductsComponent implements OnInit {
         this.columns = ['photo', 'sku', 'name', 'brand', 'actions'];
       }
       this.dataSource.data = products;
+      this.dataSource.sort = this.sort;
       // this.dataSource.paginator.length = this.total;
       // this.dataSource.paginator.pageIndex = this.page;
       // this.dataSource.paginator.pageSize = this.size;

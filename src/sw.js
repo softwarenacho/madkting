@@ -1,9 +1,8 @@
-const name = 'madkting';
-const files = ['assets/', 'index.html', 'favicon.ico'];
+const files = ['assets', 'index.html', 'favicon.ico'];
 
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(name).then( cache => {
+    caches.open('madkting').then( cache => {
       return cache.addAll(files);
     })
   );
@@ -13,7 +12,7 @@ self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys().then( keyList => {
       return Promise.all( keyList.map( key => {
-        if (key !== name) {
+        if (key !== 'madkting') {
           return caches.delete(key);
         }
       }));
