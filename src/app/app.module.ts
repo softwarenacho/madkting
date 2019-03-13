@@ -29,7 +29,8 @@ import { api } from './api.service';
     NgxGalleryModule,
     BrowserAnimationsModule,
     MatTooltipModule,
-    environment.production ? ServiceWorkerModule.register('ngsw-worker.js') : []
+    environment.production ? ServiceWorkerModule.register('ngsw-worker.js') : [],
+    environment.production ? ServiceWorkerModule.register('sw.js') : []
   ],
   providers: [api],
   bootstrap: [AppComponent]
