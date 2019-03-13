@@ -34,3 +34,48 @@ El reto principal de éste proyecto fue la paginación usando las tablas y utili
 - Paginación, será un reto personal lograr hacer funcionar el componente de `Material` o en su defecto desarrollar uno propio, lo cual podría haber sido más sencillo al principio gracias a los links `rel` que se obtienen en la API de Madkting
 - Offline, al momento sólo se guardan los assets en cache, pero me gustaría guardar por lo menos el último `request` ejecutado en **localStorage** lo que permitiría la visualización de la table inicial aún sin conexión
 - Detalle en html del paquete, actualmente se recibe de la API un string conteniendo html, logré avanzar limpiando las imagenes ya que la mayoria de las pruebas arrojaron error al obtener el archivo y ocasionaban problemas de rendimiento.
+
+### API ENDPOINTS
+
+
+```
+  def madkting
+    conn = Faraday.new(url: 'https://api.software.madkting.com') do |f|
+      f.headers = { 'Accept' => 'application/json', 'Authorization' => "Token #{ENV["madkting_key"]}" }
+      f.adapter  Faraday.default_adapter
+    end
+    request = "shops/76/products/?page=#{params['page']}&page_size=#{params['page_size']}"
+    get = conn.get(request)
+    response = {
+      code: 200,
+      total: get.headers['X-Pagination-Total-Count'],
+      page: get.headers['X-Pagination-Current-Page'],
+      size: get.headers['X-Pagination-Per-Page'],
+      data: get.body.force_encoding("UTF-8")
+    }
+    begin
+      render json: response
+    rescue
+      render json: apiError
+    end
+  end
+
+  def madktingConfig
+    conn = Faraday.new(url: 'https://api.software.madkting.com') do |f|
+      f.headers = { 'Accept' => 'application/json', 'Authorization' => "Token #{ENV["madkting_key"]}" }
+      f.adapter  Faraday.default_adapter
+    end
+    shops = conn.get("shops/")
+    categories = conn.get("categories/")
+    response = {
+      code: 200,
+      categories: categories.body.force_encoding("UTF-8"),
+      shops: shops.body.force_encoding("UTF-8")
+    }
+    begin
+      render json: response
+    rescue=> error
+      render json: apiError
+    end
+  end
+  ```
