@@ -50,8 +50,17 @@ body {
   to { transform: rotate(360deg); }
 }
 
+.ngx-gallery-image {
+  transition: 1s ease-in-out;
+  max-width: calc(100% - 20px);
+}
+
 .mat-sidenav-container, .mat-sidenav-content, .mat-tab-body-content {
     transform: none !important;
+}
+
+.mat-sort-header-container {
+  justify-content: center !important;
 }
 
 .fa-arrow-circle-left, .fa-arrow-circle-right {

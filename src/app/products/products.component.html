@@ -4,12 +4,12 @@
 <div class="products" [style.display]="loading ? 'none' : 'flex'">
 
   <div class="tabs">
-    <div class="tab" [ngClass]="!product ? 'active' : ''" (click)="backToList()">
+    <div id="list-tab" class="tab" [ngClass]="!product ? 'active' : ''" (click)="backToList()">
       <img src="assets/icons/list.svg" alt="Producto">
       <span class="name">Productos</span>
       <span class="badge">{{ total }}</span>
     </div>
-    <div class="tab" *ngFor="let item of tabs" [ngClass]="product['sku'] == item['sku'] ? 'active' : ''" (click)="openTab(item)">
+    <div id="tab-{{item['pk']}}" class="tab" *ngFor="let item of tabs" [ngClass]="product['sku'] == item['sku'] ? 'active' : ''" (click)="openTab(item)">
       <span class="name">{{ item['sku'] }}</span>
       <i class="fa fa-close" (click)="closeTab(item)"></i>
     </div>
@@ -18,7 +18,7 @@
   <div class="product" *ngIf="!!product">
 
     <!-- Información del producto -->
-    <mat-card class="card">
+    <mat-card class="card info">
       <mat-card-header>
         <div mat-card-avatar class="header-image">
           <img src="assets/icons/product.svg" alt="Información del producto">
@@ -66,7 +66,7 @@
     </mat-card>
 
     <!-- Números -->
-    <mat-card class="card">
+    <mat-card class="card data">
       <mat-card-header>
         <div mat-card-avatar class="header-image">
           <img src="assets/icons/number.svg" alt="Datos del producto">
@@ -102,12 +102,12 @@
     </mat-card>
 
     <!-- Imagenes -->
-    <mat-card class="card">
+    <mat-card class="card image">
       <mat-card-header>
         <div mat-card-avatar class="header-image">
           <img src="assets/icons/picture.svg" alt="Galería de imágenes">
         </div>
-        <mat-card-title>Imágenes <span>{{ galleryImages.length }}</span></mat-card-title>
+        <mat-card-title>Imágenes <span>({{ galleryImages.length }})</span></mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <ngx-gallery *ngIf="galleryImages.length" [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
@@ -115,7 +115,7 @@
     </mat-card>
 
     <!-- Descripción -->
-    <mat-card class="card">
+    <mat-card class="card description">
       <mat-card-header>
         <div mat-card-avatar class="header-image">
           <img src="assets/icons/document.svg" alt="Descripción">
@@ -135,8 +135,14 @@
     <ng-container matColumnDef="photo">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let row">
-        <img [src]="row.photo ? row.photo : 'assets/icons/picture.svg'" alt="">
+        <img [src]="row.photo ? row.photo : 'assets/icons/picture.svg'" alt="" (click)="openTab(row)">
       </td>
+    </ng-container>
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let row"> {{row.id}} </td>
     </ng-container>
 
     <!-- SKU Column -->
@@ -152,8 +158,8 @@
       matTooltip="{{row.name}}"
       matTooltipClass="tooltip"
       [matTooltipPosition]="'above'">
-        {{row.name.substring(0,50)}}
-        {{ row.name.length > 50 ? '...' : '' }}
+        {{row.name.substring(0,30)}}
+        {{ row.name.length > 30 ? '...' : '' }}
       </td>
     </ng-container>
 
@@ -161,6 +167,24 @@
     <ng-container matColumnDef="brand">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Brand </th>
       <td mat-cell *matCellDef="let row"> {{row.brand}} </td>
+    </ng-container>
+
+    <!-- Stock Column -->
+    <ng-container matColumnDef="stock">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Stock </th>
+      <td mat-cell *matCellDef="let row"> {{row.stock}} </td>
+    </ng-container>
+
+    <!-- Price Column -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio </th>
+      <td mat-cell *matCellDef="let row"> {{row.price | currency}} </td>
+    </ng-container>
+
+    <!-- Categoría Column -->
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Categoría </th>
+      <td mat-cell *matCellDef="let row"> {{getCategory(row.category)}} </td>
     </ng-container>
 
     <!-- Actions Column -->

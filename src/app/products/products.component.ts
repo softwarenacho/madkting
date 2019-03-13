@@ -32,7 +32,8 @@ export class ProductsComponent implements OnInit {
   total = 0;
   tabs = [];
   config;
-  columns = ['photo', 'sku', 'name', 'brand', 'actions'];
+
+  columns;
   dataSource =  new MatTableDataSource();
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
@@ -55,13 +56,24 @@ export class ProductsComponent implements OnInit {
       });
       let products = this.products.map( product => {
         let row = {
+          id: product['pk'],
           sku: product['sku'],
           name: product['name'],
           brand: product['brand'],
+          stock: product['stock'],
+          price: product['price'],
+          category: product['category_pk'],
           photo: product['images'][0]['url']
         }
         return row;
       });
+      console.log(window.innerWidth)
+      if (window.innerWidth > 768.9) {
+        this.columns = ['photo', 'id', 'sku', 'name', 'brand', 'stock', 'price', 'category', 'actions'];
+      } else {
+
+        this.columns = ['photo', 'sku', 'name', 'brand', 'actions'];
+      }
       this.dataSource = new MatTableDataSource(products);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -93,15 +105,14 @@ export class ProductsComponent implements OnInit {
         previewInfinityMove: true
       },
       {
-        breakpoint: 756,
-        width: "300px",
-        height: "300px",
-        thumbnailsColumns: 5
+        width: "100%",
+        height: "500px",
+        thumbnailsColumns: 4
       },
       {
-        breakpoint: 500,
+        breakpoint: 768,
         width: "100%",
-        height: "200px",
+        height: "350px",
         thumbnailsColumns: 3
       }
     ];
@@ -113,15 +124,18 @@ export class ProductsComponent implements OnInit {
 
   getCategory = pk => {
     let category = this.categories.find( cat => cat['pk'] == pk);
-    return category['name'];
+    return category ? category['name'] : '';
   }
 
   backToList = () => {
     this.product = false;
     this.galleryImages = [];
+    let e = document.getElementById("list-tab");
+    e.scrollIntoView();
   }
 
   openTab = product => {
+    console.log('product', product)
     this.products.forEach( (pro, i) => {
       if (pro['sku'] == product['sku']) {
         this.product = pro;
@@ -143,3 +157,6 @@ export class ProductsComponent implements OnInit {
   }
 
 }
+
+// var elmnt = document.getElementByClass("content");
+// elmnt.scrollIntoView();

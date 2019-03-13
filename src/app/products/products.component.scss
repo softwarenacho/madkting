@@ -3,6 +3,7 @@ $blue: #2B9FC3;
 $red: #9C1821;
 $grey: #2b2b2b;
 $border: 1px solid #2b2b2b40;
+$break: 768px;
 
 ::-webkit-scrollbar {
     width: 0px;
@@ -16,11 +17,19 @@ $border: 1px solid #2b2b2b40;
   justify-content: center;
   margin-top: 25px;
   padding: 10px;
+  .fa-close {
+    color: $red;
+  }
   .tabs {
     width: 100%;
     border-bottom: $border;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     overflow: scroll;
+    @media screen and (min-width: $break) {
+      justify-content: center;
+    }
     .tab {
       padding: 10px 20px;
       display: inline-flex;
@@ -50,6 +59,10 @@ $border: 1px solid #2b2b2b40;
       }
     }
   }
+  .mat-paginator {
+    width: 100%;
+    border: $border;
+  }
   .mat-table {
     width: 100%;
     margin-top: 25px;
@@ -61,13 +74,16 @@ $border: 1px solid #2b2b2b40;
       word-wrap: break-word;
       padding: 10px;
       font-size: 0.65em;
+      text-align: center;
     }
     .mat-header-cell {
       color: $grey;
+      text-align: center;
     }
     .mat-column-photo {
-      padding: 0 5px;
+      padding: 5px;
       overflow: hidden;
+      cursor: pointer;
     }
     .mat-column-actions {
       padding-right: 10px;
@@ -80,7 +96,6 @@ $border: 1px solid #2b2b2b40;
     }
     .actions {
       max-height: 15px;
-      padding: 5px;
       cursor: pointer;
     }
    .mat-row:nth-child(odd){
@@ -96,10 +111,18 @@ $border: 1px solid #2b2b2b40;
   align-items: center;
   justify-content: center;
   padding: 25px;
+  @media screen and (min-width: $break) {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
   .card {
     width: 100%;
     border-top: 2.5px solid $blue;
     margin-top: 15px;
+    @media screen and (min-width: $break) {
+      max-width: 90%;
+      align-self: start;
+    }
     .mat-card-header {
       align-items: center;
       justify-content: left;
@@ -141,14 +164,26 @@ $border: 1px solid #2b2b2b40;
           }
         }
       }
-      .ngx-gallery-image {
-        transition: 1s ease-in-out;
-      }
     }
   }
 }
 
-
 .loading {
   margin: 0 -5px;
+}
+
+@media screen and (min-width: 1000px) {
+  .product {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-areas: "info description" "data description" "image description";
+  }
+
+  .info { grid-area: info; }
+
+  .data { grid-area: data; }
+
+  .image { grid-area: image; }
+
+  .description { grid-area: description; }
 }
