@@ -11,10 +11,122 @@
     </div>
   </div>
 
+  <div class="product" *ngIf="!!product">
 
-  <table mat-table [dataSource]="dataSource" matSort>
+    <!-- Información del producto -->
+    <mat-card class="card">
+      <mat-card-header>
+        <div mat-card-avatar class="header-image">
+          <img src="assets/icons/product.svg" alt="Información del producto">
+        </div>
+        <mat-card-title>
+          Información del producto
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          <span class="container">
+            ID:
+            <span class="data">{{ product['pk'] }}</span>
+          </span>
+          <span class="container">
+            SKU:
+            <span class="data">{{ product['sku'] }}</span>
+          </span>
+          <span class="container">
+            Nombre:
+            <span class="data">{{ product['name'] }}</span>
+          </span>
+          <span class="container">
+            Marca:
+            <span class="data">{{ product['brand'] }}</span>
+          </span>
+          <span class="container">
+            Categoría:
+            <span class="data">{{ product['category_pk'] }}</span>
+          </span>
+          <span class="container">
+            Condición:
+            <span class="data">{{ product['condition'] }}</span>
+          </span>
+          <span class="container">
+            Recolección:
+            <span class="data">{{ product['local_pickup'] }}</span>
+          </span>
+          <span class="container">
+            Creado:
+            <span class="data">{{ product['created_at'] | date }}</span>
+          </span>
+        </p>
+      </mat-card-content>
+    </mat-card>
 
-    <!-- ID Column -->
+    <!-- Números -->
+    <mat-card class="card">
+      <mat-card-header>
+        <div mat-card-avatar class="header-image">
+          <img src="assets/icons/number.svg" alt="Datos del producto">
+        </div>
+        <mat-card-title>Datos del producto</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          <span class="container">
+            Precio:
+            <span class="data">{{ product['price'] | currency }}</span>
+          </span>
+          <span class="container">
+            Unidades:
+            <span class="data">{{ product['stock'] }}</span>
+          </span>
+          <span class="container">
+            Dimensiones:
+            <span class="data">
+              {{ product['shipping_height'] }}{{ product['dimensions_unit'] }} x {{ product['shipping_width'] }}{{ product['dimensions_unit'] }} x {{ product['shipping_depth'] }}{{ product['dimensions_unit'] }}
+            </span>
+          </span>
+          <span class="container">
+            Peso:
+            <span class="data">{{ product['weight'] + product['weight_unit'] }}</span>
+          </span>
+          <span class="container">
+            Costo de envío:
+            <span class="data">{{ product['shipping_price'] | currency }}</span>
+          </span>
+        </p>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Imagenes -->
+    <mat-card class="card">
+      <mat-card-header>
+        <div mat-card-avatar class="header-image">
+          <img src="assets/icons/open.svg" alt="Galería de imágenes">
+        </div>
+        <mat-card-title>Imágenes</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Market Places -->
+    <mat-card class="card">
+      <mat-card-header>
+        <div mat-card-avatar class="header-image">
+          <img src="assets/icons/shop.svg" alt="Galería de imágenes">
+        </div>
+        <mat-card-title>Tiendas</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+
+
+  <table  *ngIf="!product"  mat-table [dataSource]="dataSource" matSort>
+
+    <!-- Photo Column -->
     <ng-container matColumnDef="photo">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let row">
@@ -22,7 +134,7 @@
       </td>
     </ng-container>
 
-    <!-- Progress Column -->
+    <!-- SKU Column -->
     <ng-container matColumnDef="sku">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> SKU </th>
       <td mat-cell *matCellDef="let row"> {{row.sku}} </td>
@@ -40,17 +152,28 @@
       </td>
     </ng-container>
 
-    <!-- Color Column -->
+    <!-- Brand Column -->
     <ng-container matColumnDef="brand">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Brand </th>
       <td mat-cell *matCellDef="let row"> {{row.brand}} </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef style="text-align: center;">
+        <img src="assets/icons/cog.svg" alt="Acciones" class="actions">
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <a (click)="openTab(row)">
+          <img src="assets/icons/open.svg" alt="Detalles" class="actions">
+        </a>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columns"></tr>
     <tr mat-row *matRowDef="let row; columns: columns;">
     </tr>
   </table>
-
-  <mat-paginator [length]="total" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+  <mat-paginator  *ngIf="!product" [length]="total" [pageSize]="10" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
 
 </div>

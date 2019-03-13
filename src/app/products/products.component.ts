@@ -22,10 +22,13 @@ export class ProductsComponent implements OnInit {
 
   loading;
   products;
+  product;
   page = 1;
   size = 10;
   total = 0;
-  columns = ['photo', 'sku', 'name', 'brand'];
+  current_tab = 0;
+  tabs = [];
+  columns = ['photo', 'sku', 'name', 'brand', 'actions'];
   dataSource =  new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -56,6 +59,17 @@ export class ProductsComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.loading = false;
     });
+  }
+
+  openTab = product => {
+    console.log('product',product)
+    this.products.filter( (pro, i) => {
+      if (pro['sku'] == product['sku']) {
+        this.product = pro;
+        this.current_tab = pro['sku'];
+        console.log('product', i, pro)
+      }
+    })
   }
 
 }
